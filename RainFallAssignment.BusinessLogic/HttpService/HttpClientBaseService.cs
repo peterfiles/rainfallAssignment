@@ -26,11 +26,9 @@ namespace RainFallAssignment.BusinessLogic.HttpBaseService
     {
       var httpClient = _httpClientFactory.CreateClient(clientAPI);
       var httpResponse = await httpClient.GetAsync(httpClient.BaseAddress + urlPath);
-      //if (httpResponse.IsSuccessStatusCode)
-      //{
-
-      //}
-      return JsonConvert.SerializeObject(httpResponse);
+      var responseObject = await httpResponse.Content.ReadAsStringAsync();
+     
+      return JsonConvert.SerializeObject(responseObject);
     }
   }
 }
