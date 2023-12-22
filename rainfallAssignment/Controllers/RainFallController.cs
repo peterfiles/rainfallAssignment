@@ -36,7 +36,7 @@ namespace RainFallAssignment.API.Controllers
     /// </summary>
     [HttpGet("/id/stations", Name = "get-list-stationId")]
     [Tags("Rainfall Station Data")]
-    public Task<string> GetAllStationId()
+    public List<RainFall> GetAllStationId()
     {
       return _rainFallAssignment.GetAllRainFallStationId();
     }

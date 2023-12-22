@@ -9,7 +9,7 @@ namespace RainFallAssignment.Entities
 {
   public class RainFallMeasures
   {
-    public Uri stringId { get; set; } 
+    public Uri @id { get; set; } 
     public string parameter { get; set; }
     public string parameterName { get; set; }
     public int period { get; set; } 

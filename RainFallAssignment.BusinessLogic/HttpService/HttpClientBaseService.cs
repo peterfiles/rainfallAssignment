@@ -22,13 +22,13 @@ namespace RainFallAssignment.BusinessLogic.HttpBaseService
     /// Use generic method for get
     /// </summary>
     /// <returns></returns>
-    public async Task<string> Get(string clientAPI, string urlPath)
+    public Task<string> Get(string clientAPI, string urlPath)
     {
       var httpClient = _httpClientFactory.CreateClient(clientAPI);
-      var httpResponse = await httpClient.GetAsync(httpClient.BaseAddress + urlPath);
-      var responseObject = await httpResponse.Content.ReadAsStringAsync();
+      var httpResponse =  httpClient.GetAsync(httpClient.BaseAddress + urlPath);
+      var responseObject =  httpResponse.Result.Content.ReadAsStringAsync();
      
-      return JsonConvert.SerializeObject(responseObject);
+      return responseObject;
     }
   }
 }
