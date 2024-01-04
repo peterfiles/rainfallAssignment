@@ -49,11 +49,21 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="rainFallAssigmentGetStationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RainFallAssignment.BusinessLogic\RainFallAssignment.Application.csproj">
+      <Project>{5396a9c9-6c2f-41ed-b229-49298ec4f99a}</Project>
+      <Name>RainFallAssignment.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RainFallAssignment.Entities\RainFallAssignment.Entities.csproj">
+      <Project>{50570c80-d384-4909-aea0-e56a76926e9b}</Project>
+      <Name>RainFallAssignment.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

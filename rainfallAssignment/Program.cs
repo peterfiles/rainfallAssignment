@@ -1,8 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using rainfallAssignment.DocumentFilters;
 using RainFallAssignment.API.Controllers;
 using RainFallAssignment.BusinessLogic.BaseService;
+using RainFallAssignment.BusinessLogic.Helpers;
 using RainFallAssignment.BusinessLogic.HttpBaseService;
 using RainFallAssignment.BusinessLogic.Interface;
 using System.Reflection;
@@ -36,10 +38,16 @@ builder.Services.AddSwaggerGen(setup => { setup.SwaggerDoc("v1", new OpenApiInfo
   }
 }); 
   setup.DocumentFilter<TagDocumentFilter>();
-});
+  setup.EnableAnnotations();
 
+  // using System.Reflection;
+  var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+  setup.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+
+});
 builder.Services.AddScoped<HttpClientBaseService>();
-builder.Services.AddScoped<IRainFallAssignment,RainFallAssignmentService>();
+builder.Services.AddScoped<Helper>();
+builder.Services.AddScoped<IRainFallAssignment, RainFallService>();
 
 //builder.Services.AddSwaggerGen(servers => servers.AddServer(new OpenApiServer()
 //{
