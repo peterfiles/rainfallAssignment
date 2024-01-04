@@ -25,9 +25,9 @@ namespace RainFallAssignment.API.Controllers
     /// </summary>
     [HttpGet("/id/{stationId}/readings", Name = "get-rainfall")]
     [Tags("Rainfall")]
-    public Task<RainFallStationReadingsResult> GetRainFallStationReading(string stationId = "")
+    public List<RainFallStationReadingsResult> GetRainFallStationReading(string stationId = "")
     {
-      throw new NotImplementedException();
+      return _rainFallAssignment.GetRainFallStationReading(stationId);
     }
 
 

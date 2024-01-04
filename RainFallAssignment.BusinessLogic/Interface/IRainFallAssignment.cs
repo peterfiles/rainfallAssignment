@@ -10,6 +10,6 @@ namespace RainFallAssignment.BusinessLogic.Interface
   public interface IRainFallAssignment
   {
     List<RainFall> GetAllRainFallStationId();
-    Task<RainFallStationReadingsResult> GetRainFallStationReading(string stationId);
+    List<RainFallStationReadingsResult> GetRainFallStationReading(string stationId);
   }
 }

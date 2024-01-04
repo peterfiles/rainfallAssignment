@@ -38,9 +38,25 @@ namespace RainFallAssignment.BusinessLogic.BaseService
       return parseValues;
     }
 
-    public Task<RainFallStationReadingsResult> GetRainFallStationReading(string stationId)
+    public List<RainFallStationReadingsResult> GetRainFallStationReading(string stationId)
     {
-      throw new NotImplementedException();
+      var rainFallQueryResponse = _httpClientService.Get("RainfallAPI", string.Format("/id/stations/{0}/readings?_sorted&_limit=100", stationId));
+      //return JsonConvert.DeserializeObject<Task<RainFall>>(JsonConvert.SerializeObject(.));
+      //Replacing Keys to match entities
+      //@id = id
+      //long = distance_long
+      var newString = rainFallQueryResponse.Result.Replace("@id", "stringId");
+      dynamic responseToJson = JsonConvert.DeserializeObject<dynamic>(JsonConvert.SerializeObject(newString));
+
+      List<RainFallStationReadingsResult> parseValues = new List<RainFallStationReadingsResult>();
+      foreach (dynamic item in JsonConvert.DeserializeObject<dynamic>(responseToJson))
+      {
+        if (item.Name == "items")
+        {
+          parseValues = JsonConvert.DeserializeObject<List<RainFallStationReadingsResult>>(JsonConvert.SerializeObject(item.Value));
+        }
+      }
+      return parseValues;
     }
   }
 }
