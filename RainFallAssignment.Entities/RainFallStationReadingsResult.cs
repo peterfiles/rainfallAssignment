@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,5 +13,6 @@ namespace RainFallAssignment.Entities
     public DateTime dateTime { get; set; }
     public Uri measure { get; set; }
     public decimal value { get; set; }  
+
   }
 }

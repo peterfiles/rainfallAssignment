@@ -10,25 +10,24 @@ using System.Threading.Tasks;
 
 namespace RainFallAssignment.BusinessLogic.HttpBaseService
 {
-  public class HttpClientBaseService
+  public class HttpClientBaseService 
   {
     private readonly IHttpClientFactory _httpClientFactory;
-
     public HttpClientBaseService(IHttpClientFactory httpClientFactory)
     {
       _httpClientFactory = httpClientFactory;
     }
+
     /// <summary>
     /// Use generic method for get
     /// </summary>
     /// <returns></returns>
-    public Task<string> Get(string clientAPI, string urlPath)
+    public Task<HttpResponseMessage> Get(string clientAPI, string urlPath)
     {
       var httpClient = _httpClientFactory.CreateClient(clientAPI);
       var httpResponse =  httpClient.GetAsync(httpClient.BaseAddress + urlPath);
-      var responseObject =  httpResponse.Result.Content.ReadAsStringAsync();
      
-      return responseObject;
+      return httpResponse;
     }
   }
 }

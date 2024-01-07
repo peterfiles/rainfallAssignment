@@ -45,6 +45,7 @@
     <Compile Include="RainFall.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RainFallMeasures.cs" />
+    <Compile Include="RainFallResponseData.cs" />
     <Compile Include="RainFallStationReadingsResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

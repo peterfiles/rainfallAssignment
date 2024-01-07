@@ -5,6 +5,7 @@ using RainFallAssignment.API.Controllers;
 using RainFallAssignment.BusinessLogic.BaseService;
 using RainFallAssignment.BusinessLogic.HttpBaseService;
 using RainFallAssignment.BusinessLogic.Interface;
+using System.Net.Http.Headers;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +37,7 @@ builder.Services.AddSwaggerGen(setup => { setup.SwaggerDoc("v1", new OpenApiInfo
   }
 }); 
   setup.DocumentFilter<TagDocumentFilter>();
+  setup.EnableAnnotations();
 });
 
 builder.Services.AddScoped<HttpClientBaseService>();

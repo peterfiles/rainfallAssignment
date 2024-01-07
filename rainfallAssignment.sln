@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainFallAssignment.Entities
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainFallAssignment.Infrastructure", "RainFallAssignment.Infrastructure\RainFallAssignment.Infrastructure.csproj", "{83C93F8C-2D65-4327-9002-DE1346ED1414}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainFallAssignment.Test", "RainFallAssignment.Test\RainFallAssignment.Test.csproj", "{963C2B9A-C308-4CB8-9E1B-70FFAEE6D6C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainFallHttpResponseTests", "RainFallHttpResponseTests\RainFallHttpResponseTests.csproj", "{1133B645-D1C7-43A8-AB8B-01D9B2468FF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{83C93F8C-2D65-4327-9002-DE1346ED1414}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83C93F8C-2D65-4327-9002-DE1346ED1414}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83C93F8C-2D65-4327-9002-DE1346ED1414}.Release|Any CPU.Build.0 = Release|Any CPU
-		{963C2B9A-C308-4CB8-9E1B-70FFAEE6D6C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{963C2B9A-C308-4CB8-9E1B-70FFAEE6D6C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{963C2B9A-C308-4CB8-9E1B-70FFAEE6D6C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{963C2B9A-C308-4CB8-9E1B-70FFAEE6D6C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1133B645-D1C7-43A8-AB8B-01D9B2468FF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1133B645-D1C7-43A8-AB8B-01D9B2468FF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1133B645-D1C7-43A8-AB8B-01D9B2468FF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1133B645-D1C7-43A8-AB8B-01D9B2468FF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

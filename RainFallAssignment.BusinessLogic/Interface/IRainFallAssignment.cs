@@ -1,4 +1,5 @@
-﻿using RainFallAssignment.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using RainFallAssignment.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,8 @@ namespace RainFallAssignment.BusinessLogic.Interface
 {
   public interface IRainFallAssignment
   {
-    List<RainFall> GetAllRainFallStationId();
-    List<RainFallStationReadingsResult> GetRainFallStationReading(string stationId);
+    Task<RainFallResponseData> GetAllRainFallStationId();
+    Task<RainFallResponseData> GetRainFallStationReading(string stationId);
+
   }
 }
