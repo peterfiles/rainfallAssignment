@@ -23,42 +23,77 @@ namespace RainFallHttpResponseTests
     private HttpHelperClass _httpHelperClass;
     private HttpClientBaseService _httpClientBaseService;
     private RainFallAssignmentService _railFallAssignmentService;
+    private HttpClient _httpClient;
+    private string _urlPath = "/id/stations?parameter=rainfall&_limit=50";
 
-    Mock<IRainFallAssignment> _iRainFallAssignment;
     Mock<IHttpClientFactory> _httpClientFactory;
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="httpClientFactory"></param>
-
-    /// <summary>
-    /// Get Response Http Response Status 200
-    /// </summary>
-    /// [SwaggerResponse((int)HttpStatusCode.OK, "A list of rainfall readings successfully retrieved", Type = typeof(RainFallStationReadingsResult))]
-    //[SwaggerResponse((int)HttpStatusCode.BadRequest, "Invalid request", Type = typeof(IEnumerable<dynamic>))]
-    //[SwaggerResponse((int)HttpStatusCode.NotFound, "No readings found for the specified stationId", Type = typeof(IEnumerable<dynamic>))]
-    //[SwaggerResponse((int)HttpStatusCode.InternalServerError, "Internal server error", Type = typeof(IEnumerable<dynamic>))]
 
     [SetUp]
     public void SetUp()
     {
-      var client = new HttpClient();
+      _httpClient = new HttpClient();
       var clientName = "RainfallAPI";
       _httpClientFactory = new Mock<IHttpClientFactory>();
-      _httpClientFactory.Setup(_ => _.CreateClient(clientName)).Returns(client);
+      _httpClientFactory.Setup(_ => _.CreateClient(clientName)).Returns(_httpClient);
+      _httpClient.BaseAddress = new Uri("http://environment.data.gov.uk/flood-monitoring");
       _httpClientBaseService = new HttpClientBaseService(_httpClientFactory.Object);
       _railFallAssignmentService = new RainFallAssignmentService(_httpClientBaseService);
       _httpHelperClass = new HttpHelperClass();
     }
 
+    /// <summary>
+    /// Unit testing for response codes
+    /// stationID is Existing
+    /// Status code: 200
+    /// </summary>
     [Test]
     public void GetValidResponse()
     {
-      var stationId = "3002";
-      var returnContent = _railFallAssignmentService.GetRainFallStationReading(stationId);
-      returnContent.Result.httpResponseMessageContent.StatusCode = HttpStatusCode.OK;
+      var stationId = "4163";
+      _httpClient.GetAsync(_httpClient.BaseAddress + _urlPath);
+      var returnContent = _railFallAssignmentService.GetRainFallStationReading(_httpClient,stationId);
       var response = _httpHelperClass.ReturnResponseResult(returnContent);
       Assert.That(((IStatusCodeActionResult)response).StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
+    }
+
+    /// <summary>
+    /// stationID is not existing
+    /// Status code: 404
+    /// </summary>
+    [Test]
+    public void GetResponse404()
+    {
+      var stationId = "3002";
+      _httpClient.GetAsync(_httpClient.BaseAddress + _urlPath);
+      var returnContent = _railFallAssignmentService.GetRainFallStationReading(_httpClient, stationId);
+      var response = _httpHelperClass.ReturnResponseResult(returnContent);
+      Assert.That(((IStatusCodeActionResult)response).StatusCode, Is.EqualTo((int)HttpStatusCode.NotFound));
+    }
+
+    /// <summary>
+    /// According to: https://en.ryte.com/wiki/Status_Code_400
+    /// * 400 bad request: All errors with the status code 4xx indicate an invalid request from a client to a server.
+    /// Status code: 400
+    /// </summary>
+    [Test]
+    public void GetResponse400()
+    {
+      var stationId = "3002";
+      _httpClient.GetAsync(_httpClient.BaseAddress + "test" + _urlPath + "&testingforBadRequest");
+      var returnContent = _railFallAssignmentService.GetRainFallStationReading(_httpClient, stationId);
+      var response = _httpHelperClass.ReturnResponseResult(returnContent);
+      Assert.That(((IStatusCodeActionResult)response).StatusCode, Is.EqualTo((int)HttpStatusCode.NotFound));
+    }
+
+    /// <summary>
+    /// Status code: 500
+    /// </summary>
+    [Test]
+    public void GetResponse500()
+    {
+      _httpClient.GetAsync(_httpClient.BaseAddress +  _urlPath );
+      _httpClient = new HttpClient(); 
+      Assert.Throws<NullReferenceException>(() => _httpClientBaseService.GetWithHttpClient(null, null,null));
     }
 
   }

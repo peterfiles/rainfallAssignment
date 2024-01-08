@@ -3,8 +3,10 @@ using Newtonsoft.Json;
 using RainFallAssignment.BusinessLogic.HttpBaseService;
 using RainFallAssignment.BusinessLogic.Interface;
 using RainFallAssignment.Entities;
+using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -63,10 +65,36 @@ namespace RainFallAssignment.BusinessLogic.BaseService
         if (item.Name == "items")
         {
           parseValues = JsonConvert.DeserializeObject<List<RainFallStationReadingsResult>>(JsonConvert.SerializeObject(item.Value));
+          rainFallQueryResponse.StatusCode = parseValues.Count == 0 ? HttpStatusCode.NotFound : HttpStatusCode.OK; 
         }
       }
 
       return new RainFallResponseData { rainFallStationReadingResultList = parseValues, httpResponseMessageContent = rainFallQueryResponse};
+    }
+
+    public async Task<RainFallResponseData> GetRainFallStationReading(HttpClient client,string stationId)
+    {
+      var rainFallQueryResponse = await _httpClientService.GetWithHttpClient(client,"RainfallAPI", string.Format("/id/stations/{0}/readings?_sorted&_limit=100", stationId));
+      //return JsonConvert.DeserializeObject<Task<RainFall>>(JsonConvert.SerializeObject(.));
+      //Replacing Keys to match entities
+      //@id = id
+      //long = distance_long
+
+      var responseObject = rainFallQueryResponse.Content.ReadAsStringAsync();
+      var newString = responseObject.Result.Replace("@id", "stringId");
+      dynamic responseToJson = JsonConvert.DeserializeObject<dynamic>(JsonConvert.SerializeObject(newString));
+
+      List<RainFallStationReadingsResult> parseValues = new List<RainFallStationReadingsResult>();
+      foreach (dynamic item in JsonConvert.DeserializeObject<dynamic>(responseToJson))
+      {
+        if (item.Name == "items")
+        {
+          parseValues = JsonConvert.DeserializeObject<List<RainFallStationReadingsResult>>(JsonConvert.SerializeObject(item.Value));
+          rainFallQueryResponse.StatusCode = parseValues.Count == 0 ? HttpStatusCode.NotFound : HttpStatusCode.OK;
+        }
+      }
+
+      return new RainFallResponseData { rainFallStationReadingResultList = parseValues, httpResponseMessageContent = rainFallQueryResponse };
     }
   }
 }
